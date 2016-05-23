@@ -10,4 +10,14 @@ class PokemonService
     JSON.parse(response.body)
   end
 
+  def pokemon_information(info)
+    path = "pokemon/#{info}"
+    get(path: path)
+  end
+
+  def get_moves_for(info)
+    response = pokemon_information(info)
+    response["moves"].map {|move| move["name"]}
+  end
+
 end
