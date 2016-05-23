@@ -20,4 +20,18 @@ class PokemonService
     response["moves"].map {|move| move["name"]}
   end
 
+  def next_evolution(id)
+    response = pokemon_information(id)
+    response["evolutions"].first["to"] unless response["evolutions"].empty?
+  end
+
+  def evolutions(id)
+    response = pokemon_information(id)
+    evolutions = []
+    until next_evolution(id).nil?
+      evolutions << next_evolution(id)
+      id = next_evolution(id).downcase
+    end
+    evolutions.join(", ")
+  end
 end
